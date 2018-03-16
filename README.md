@@ -69,13 +69,14 @@ The parameter cannyKernelSize=5 defines the window for averaging the pixels.
 <img src="./test_images_output/02_solidYellowLeft_Smooth.jpg" width="480"/>  
 
 
-**4. Find the edge features using canny edge detection **  
+**4. Find the edge features using canny edge detection**  
 
 Parameters used here are: 
 
     cannyLowThresh = 50  
     cannyHighThresh = 150,  
-    since it is recommended to set the low:high threshold ratio as 1:3.
+
+since it is recommended to set the low:high threshold ratio as 1:3.
 
 <img src="./test_images_output/03_solidYellowLeft_Canny.jpg" width="480"/>  
 
@@ -100,7 +101,7 @@ The following are the hough parameters, passed to the pipeline function:
 <img src="./test_images_output/05_solidYellowLeft_Hough.jpg" width="480"/>  
 
 
-**7. Superimpose the line image and the color image **  
+**7. Superimpose the line image and the color image**  
 
 Using the function cv2.addWeighted(), the images are superimposed on one another.
     
