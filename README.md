@@ -50,11 +50,11 @@ def drawLinesPipeline(Image, CannyKernelSize, CannyLowThresh, CannyHighThresh, M
 
 Following are the steps in the pipeline:
 
-**1. Read the image from the input **  
+**1. Read the image from the input**  
 
 <img src="./test_images/solidYellowLeft.jpg" width="480"/>  
 
-    Create two copies of the image, one to mask and draw the lines (line image), and one the original image itself to superimpose the line image.
+Create two copies of the image, one to mask and draw the lines (line image), and one the original image itself to superimpose the line image.
 
 
 **2. Convert the image to grayscale**  
@@ -64,14 +64,15 @@ Following are the steps in the pipeline:
 
 **3. Smooth the image using the Gaussian smoothing**  
 
-    The parameter cannyKernelSize=5 defines the window for averaging the pixels.  
+The parameter cannyKernelSize=5 defines the window for averaging the pixels.  
  
 <img src="./test_images_output/02_solidYellowLeft_Smooth.jpg" width="480"/>  
 
 
 **4. Find the edge features using canny edge detection **  
 
-    Parameters used here are:  
+Parameters used here are: 
+
     cannyLowThresh = 50  
     cannyHighThresh = 150,  
     since it is recommended to set the low:high threshold ratio as 1:3.
@@ -81,14 +82,15 @@ Following are the steps in the pipeline:
 
 **5.  Mask the image to a quadrilateral, given the vertices of the quadrilateral**  
 
-    I have defined a reasonable mask of the shape of a quadrilateral and used these as vertices to be masked. The vertices are represented as a fraction of the size of the image.  
+I have defined a reasonable mask of the shape of a quadrilateral and used these as vertices to be masked. The vertices are represented as a fraction of the size of the image.  
     
 <img src="./test_images_output/04_solidYellowLeft_Masked.jpg" width="480"/>  
 
 
 **6. Find the lines using hough transform, and draw them**  
 
-    The following are the hough parameters, passed to the pipeline function:
+The following are the hough parameters, passed to the pipeline function:
+
     houghRho = 1              # distance resolution in pixels of the Hough grid
     houghTheta = np.pi/180    # angular resolution in radians of the Hough grid
     houghThreshold = 20       # minimum number of votes (intersections in Hough grid cell)
@@ -100,7 +102,7 @@ Following are the steps in the pipeline:
 
 **7. Superimpose the line image and the color image **  
 
-    Using the function cv2.addWeighted(), the images are superimposed on one another.
+Using the function cv2.addWeighted(), the images are superimposed on one another.
     
 <img src="./test_images_output/06_solidYellowLeft_Final.jpg" width="480"/>  
 
@@ -109,11 +111,11 @@ Following are the steps in the pipeline:
 ###  Averaging slope and extrapolating points
 ---
 
-    Here, the function draw_lines() has to be modified, such that the function draws only two continuous solid lines on the left and right side, representing the lane lines. 
+Here, the function draw_lines() has to be modified, such that the function draws only two continuous solid lines on the left and right side, representing the lane lines. 
     
-    Based on the slope of the lines, the lines are classified as left of right lines. Negative slope represents left line, because the co-ordinates in image plane are flipped. Similarly, positive slope represents right line. Along with this, the length of the lines, and the intercept of the lines on the Y-axis are calculated based on the euclidean line length formula. 
+Based on the slope of the lines, the lines are classified as left of right lines. Negative slope represents left line, because the co-ordinates in image plane are flipped. Similarly, positive slope represents right line. Along with this, the length of the lines, and the intercept of the lines on the Y-axis are calculated based on the euclidean line length formula. 
     
-    Based on this classification, the average slope and average intercept is calculated, giving more weightage to longer lines. Once the left slopes and intercepts of the left and right lines are calculated, the lines are drawn using the cv2.line() function. The result is as follows:
+Based on this classification, the average slope and average intercept is calculated, giving more weightage to longer lines. Once the left slopes and intercepts of the left and right lines are calculated, the lines are drawn using the cv2.line() function. The result is as follows:
 
 <img src="./test_images_output/solidYellowLeft.jpg" width="480"/>
 
