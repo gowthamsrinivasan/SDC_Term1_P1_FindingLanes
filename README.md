@@ -25,9 +25,12 @@ def drawLinesPipeline(Image, CannyKernelSize, CannyLowThresh, CannyHighThresh, M
     # Create two copies of the image - one for actual image, one for superimposing the lines
     colorImage = np.copy(Image)
     lineImage = np.copy(Image)
+    
+    # Filtering white and yellow color in the image
+    colorSelectedImg = select_rgb_white_yellow(lineImage)
 
     # Converting into Grayscale
-    grayImg = grayscale(lineImage)
+    grayImg = grayscale(colorSelectedImg)
 
     # Define a kernel size and apply Gaussian smoothing
     smoothImg = gaussian_blur(grayImg, CannyKernelSize)
